@@ -179,13 +179,26 @@ fn main() -> Result<()> {
                             "{}: {}:{}",
                             entry_path.display(),
                             (i + 1).to_string().green(),
-                            line.replace(&pattern, &pattern.red().underline().to_string()) //todo real regex
+                            re.replace_all(&line, |c: &regex::Captures| c
+                                .get(0)
+                                .unwrap()
+                                .as_str()
+                                .red()
+                                .underline()
+                                .to_string())
                         );
                     } else {
                         println!(
                             "{}: {}",
                             entry_path.display(),
-                            line.replace(&pattern, &pattern.red().underline().to_string()) //todo real regex(delete)
+                            line
+                            // re.replace_all(&line, |c: &regex::Captures| c
+                            //     .get(0)
+                            //     .unwrap()
+                            //     .as_str()
+                            //     .red()
+                            //     .underline()
+                            //     .to_string())
                         );
                     }
                 }
