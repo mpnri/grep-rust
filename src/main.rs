@@ -139,14 +139,14 @@ fn main() -> Result<()> {
                 println!("filename: {:?}", entry_path.file_name());
             }
 
-            if is_name_based_search {
-                let name = match entry_path.file_name() {
-                    Some(ref val) => match val.to_str() {
-                        Some(str) => str,
-                        None => "",
-                    },
+            let name = match entry_path.file_name() {
+                Some(ref val) => match val.to_str() {
+                    Some(str) => str,
                     None => "",
-                };
+                },
+                None => "",
+            };
+            if is_name_based_search {
                 if name != "" && (re.is_match(&name) ^ is_invert_match) {
                     println!("{}", entry_path.display());
                 }
@@ -177,7 +177,8 @@ fn main() -> Result<()> {
                     if show_line_number {
                         println!(
                             "{}: {}:{}",
-                            entry_path.display(),
+                            // entry_path.display(),
+                            name,
                             (i + 1).to_string().green(),
                             re.replace_all(&line, |c: &regex::Captures| c
                                 .get(0)
